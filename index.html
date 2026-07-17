@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Official Jeep Duck Distribution Program</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#101010;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    text-align:center;
+}
+
+.container{
+    width:min(500px,90%);
+}
+
+.logo{
+    font-size:80px;
+    margin-bottom:15px;
+}
+
+h1{
+    color:#FFD500;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#bbb;
+    margin-bottom:35px;
+}
+
+.card{
+    background:#1f1f1f;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 0 20px rgba(255,213,0,.15);
+}
+
+.claim{
+    margin:25px 0;
+    font-size:20px;
+}
+
+button{
+    background:#FFD500;
+    color:#111;
+    border:none;
+    padding:18px 30px;
+    font-size:22px;
+    font-weight:bold;
+    border-radius:12px;
+    cursor:pointer;
+    width:100%;
+    transition:.2s;
+}
+
+button:hover{
+    transform:scale(1.03);
+}
+
+.small{
+    margin-top:20px;
+    color:#888;
+    font-size:.85rem;
+}
+
+#player{
+    display:none;
+}
+
+video{
+    width:100%;
+    border-radius:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="landing">
+
+<div class="logo">🦆</div>
+
+<h1>FREE JEEP DUCK</h1>
+
+<div class="subtitle">
+Official Dashboard Duck Distribution Portal
+</div>
+
+<div class="card">
+
+<p class="claim">
+Congratulations!
+</p>
+
+<p>
+One complimentary Jeep duck has been reserved for your vehicle.
+</p>
+
+<br>
+
+<p>
+Press the button below to verify eligibility and claim your duck.
+</p>
+
+<br>
+
+<button onclick="claimDuck()">
+🦆 CLAIM MY FREE DUCK
+</button>
+
+<div class="small">
+Offer expires in 10 seconds.
+</div>
+
+</div>
+
+</div>
+
+<div id="player">
+
+<video id="rick" playsinline controls>
+    <source src="rickroll.mp4" type="video/mp4">
+</video>
+
+</div>
+
+</div>
+
+<script>
+
+function claimDuck(){
+
+    document.getElementById("landing").style.display="none";
+    document.getElementById("player").style.display="block";
+
+    let vid=document.getElementById("rick");
+
+    vid.muted=false;
+    vid.volume=1;
+
+    vid.play();
+
+    // Attempt fullscreen on supported browsers
+    if(vid.requestFullscreen){
+        vid.requestFullscreen().catch(()=>{});
+    }
+
+}
+
+</script>
+
+</body>
+</html>

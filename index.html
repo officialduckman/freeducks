@@ -7,6 +7,7 @@
 <title>Official Jeep Duck Distribution Program</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -14,22 +15,29 @@
 }
 
 body{
-    background:#101010;
+    background:#111;
     color:white;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:100vh;
-    text-align:center;
+    height:100vh;
 }
 
 .container{
-    width:min(500px,90%);
+    width:min(500px,92%);
+    text-align:center;
+}
+
+.card{
+    background:#1d1d1d;
+    border-radius:18px;
+    padding:35px;
+    box-shadow:0 0 30px rgba(255,215,0,.15);
 }
 
 .logo{
-    font-size:80px;
+    font-size:72px;
     margin-bottom:15px;
 }
 
@@ -39,33 +47,44 @@ h1{
 }
 
 .subtitle{
-    color:#bbb;
-    margin-bottom:35px;
+    color:#999;
+    margin-bottom:30px;
 }
 
-.card{
-    background:#1f1f1f;
-    border-radius:18px;
-    padding:30px;
-    box-shadow:0 0 20px rgba(255,213,0,.15);
+#status{
+    font-size:22px;
+    margin-bottom:15px;
 }
 
-.claim{
-    margin:25px 0;
-    font-size:20px;
+.progress{
+    width:100%;
+    height:22px;
+    background:#444;
+    border-radius:12px;
+    overflow:hidden;
+    margin-bottom:30px;
+}
+
+.bar{
+    width:0%;
+    height:100%;
+    background:#2ecc71;
+    transition:width .05s linear;
+}
+
+#verify{
+    display:none;
 }
 
 button{
-    background:#FFD500;
-    color:#111;
-    border:none;
-    padding:18px 30px;
-    font-size:22px;
-    font-weight:bold;
-    border-radius:12px;
-    cursor:pointer;
     width:100%;
-    transition:.2s;
+    padding:20px;
+    font-size:24px;
+    font-weight:bold;
+    border:none;
+    border-radius:12px;
+    background:#2ecc71;
+    cursor:pointer;
 }
 
 button:hover{
@@ -73,9 +92,9 @@ button:hover{
 }
 
 .small{
-    margin-top:20px;
     color:#888;
-    font-size:.85rem;
+    margin-top:18px;
+    font-size:.9rem;
 }
 
 #player{
@@ -86,6 +105,13 @@ video{
     width:100%;
     border-radius:14px;
 }
+
+.warning{
+    color:#ff5555;
+    margin:18px 0;
+    font-weight:bold;
+}
+
 </style>
 </head>
 
@@ -93,74 +119,140 @@ video{
 
 <div class="container">
 
-<div id="landing">
+<div class="card">
+
+<div id="loading">
 
 <div class="logo">🦆</div>
 
-<h1>FREE JEEP DUCK</h1>
+<h1>National Jeep Duck Registry</h1>
 
 <div class="subtitle">
 Official Dashboard Duck Distribution Portal
 </div>
 
-<div class="card">
+<div id="status">
+Connecting to Duck Database...
+</div>
 
-<p class="claim">
-Congratulations!
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+</div>
+
+
+<div id="verify">
+
+<div class="logo">🦆</div>
+
+<h1>Duck Located!</h1>
+
+<p style="font-size:20px;">
+One complimentary Jeep duck has been reserved for this vehicle.
 </p>
 
-<p>
-One complimentary Jeep duck has been reserved for your vehicle.
+<div class="warning">
+⚠ Bronco Ownership Screening Required
+</div>
+
+<p style="margin-bottom:25px;">
+Please confirm you are operating a Jeep to prevent fraudulent duck claims.
 </p>
-
-<br>
-
-<p>
-Press the button below to verify eligibility and claim your duck.
-</p>
-
-<br>
 
 <button onclick="claimDuck()">
-🦆 CLAIM MY FREE DUCK
+YES, I DRIVE A JEEP
 </button>
 
 <div class="small">
-Offer expires in 10 seconds.
+Duck reservation expires in 10 seconds.
 </div>
 
 </div>
 
-</div>
 
 <div id="player">
 
-<video id="rick" playsinline controls>
-    <source src="rickroll.mp4" type="video/mp4">
+<video id="rick" controls playsinline>
+<source src="rickroll.mp4" type="video/mp4">
 </video>
 
 </div>
 
 </div>
 
+</div>
+
+
 <script>
+
+const steps=[
+"Connecting to Duck Database...",
+"Searching National Inventory...",
+"Checking Jeep Ownership...",
+"Scanning VIN...",
+"Checking Bronco Registry...",
+"Verifying Duck Eligibility...",
+"Duck Found!"
+];
+
+let current=0;
+
+function nextStep(){
+
+if(current>=steps.length){
+
+document.getElementById("loading").style.display="none";
+document.getElementById("verify").style.display="block";
+return;
+
+}
+
+document.getElementById("status").innerHTML=steps[current];
+
+let bar=document.getElementById("bar");
+bar.style.width="0%";
+
+let width=0;
+
+let interval=setInterval(function(){
+
+width+=2;
+
+bar.style.width=width+"%";
+
+if(width>=100){
+
+clearInterval(interval);
+
+current++;
+
+setTimeout(nextStep,300);
+
+}
+
+},18);
+
+}
+
+nextStep();
+
 
 function claimDuck(){
 
-    document.getElementById("landing").style.display="none";
-    document.getElementById("player").style.display="block";
+document.getElementById("verify").style.display="none";
+document.getElementById("player").style.display="block";
 
-    let vid=document.getElementById("rick");
+let vid=document.getElementById("rick");
 
-    vid.muted=false;
-    vid.volume=1;
+vid.volume=1;
+vid.muted=false;
 
-    vid.play();
+if(vid.requestFullscreen){
+vid.requestFullscreen().catch(()=>{});
+}
 
-    // Attempt fullscreen on supported browsers
-    if(vid.requestFullscreen){
-        vid.requestFullscreen().catch(()=>{});
-    }
+vid.play();
 
 }
 

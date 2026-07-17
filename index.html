@@ -1,71 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Jeep Duck Distribution Portal</title>
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#121212;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh}
-.card{width:min(92%,520px);background:#1d1d1d;padding:32px;border-radius:18px;box-shadow:0 0 24px rgba(255,215,0,.15);text-align:center}
-h1{color:#FFD54A;margin:.2em 0}.duck{font-size:72px}.sub{color:#aaa;margin-bottom:20px}
-.progress{height:18px;background:#444;border-radius:9px;overflow:hidden}.bar{height:100%;width:0;background:#39c16c;transition:width .15s}
-#checks{text-align:left;margin:20px auto;max-width:340px;display:none}#checks p{margin:10px 0}
-.ok{color:#39c16c;font-weight:bold}
-#claim,#unlock,#player{display:none}
-button{background:#FFD54A;color:#111;border:0;padding:16px 22px;border-radius:10px;font-size:22px;font-weight:bold;cursor:pointer;width:100%}
-small{display:block;color:#888;margin-top:18px}
-video{width:100%;border-radius:12px}
-</style>
-</head>
-<body>
-<div class="card">
-<div id="loading">
-<div class="duck">🦆</div>
-<h1>Jeep Duck Distribution Portal</h1>
-<div class="sub" id="status">Connecting to Duck Database...</div>
-<div class="progress"><div class="bar" id="bar"></div></div>
-<div id="checks">
-<p id="c1">⬜ Connected</p>
-<p id="c2">⬜ Inventory Located</p>
-<p id="c3">⬜ Complimentary Duck Reserved</p>
-</div>
-</div>
-<div id="claim">
-<div class="duck">🦆</div>
-<h1>Congratulations!</h1>
-<p>Your complimentary dashboard duck has been reserved.</p>
-<p>Tap below to unlock your duck.</p><br>
-<button onclick="claim()">🦆 CLAIM MY DUCK</button>
-<small>By continuing, you agree to the Jeep Duck Distribution Terms &amp; Conditions.<br>Over 1,000,000 ducks distributed since 2020.</small>
-</div>
-<div id="unlock">
-<div class="duck">🔓</div><h1>Unlocking Duck...</h1>
-<p>Please do not close this page.</p>
-<div class="progress"><div class="bar" id="ubar"></div></div>
-</div>
-<div id="player">
-<video id="rick" controls playsinline>
-<source src="rickroll.mp4" type="video/mp4">
-</video>
-</div>
+body{margin:0;background:#111;color:#fff;font-family:Arial;display:flex;align-items:center;justify-content:center;min-height:100vh}
+.card{width:min(520px,92%);background:#1d1d1d;padding:30px;border-radius:16px;text-align:center}
+h1{color:#ffd54a}.barbox{height:18px;background:#444;border-radius:9px;overflow:hidden}.bar{height:100%;width:0;background:#38c172}
+.hidden{display:none}button{width:100%;padding:16px;font-size:22px;background:#ffd54a;border:0;border-radius:10px;cursor:pointer}
+small{color:#888}video{width:100%}
+.ok{text-align:left;max-width:320px;margin:20px auto}
+</style></head><body><div class=card>
+<div id=load><div style="font-size:64px">🦆</div><h1>Jeep Duck Distribution Portal</h1><p id=txt>Locating your complimentary duck...</p><div class=barbox><div id=bar class=bar></div></div></div>
+<div id=claim class=hidden><div style="font-size:64px">🦆</div><h1>Congratulations!</h1><div class=ok>✅ Connected<br><br>✅ Inventory Located<br><br>✅ Complimentary Duck Reserved</div><p>Your complimentary dashboard duck has been reserved.</p><p>Tap below to unlock your duck.</p><button onclick="unlock()">🦆 CLAIM MY DUCK</button><small><br>By continuing, you agree to the Jeep Duck Distribution Terms & Conditions.<br>Over 1,000,000 ducks distributed since 2020.</small></div>
+<div id=unlock class=hidden><h1>Unlocking Duck...</h1><div class=barbox><div id=ubar class=bar></div></div></div>
+<div id=player class=hidden><video id=v controls playsinline><source src="rickroll.mp4" type="video/mp4"></video></div>
 </div>
 <script>
-const msgs=["Connecting to Duck Database...","Searching Inventory...","Reserving Complimentary Duck...","Confirming Availability...","Duck Found!"];
-let i=0;
-function step(){
- if(i>=msgs.length){
-  document.getElementById("checks").style.display="block";
-  ["c1","c2","c3"].forEach((id,n)=>setTimeout(()=>document.getElementById(id).innerHTML='<span class="ok">✔</span> '+document.getElementById(id).textContent.slice(2),500*n));
-  setTimeout(()=>{loading.style.display="none";claim.style.display="block";},2200);
-  return;
- }
- status.textContent=msgs[i];
- let w=0,b=bar;
- let t=setInterval(()=>{w+=4;b.style.width=w+"%";if(w>=100){clearInterval(t);b.style.width="0%";i++;setTimeout(step,250);}},20);
-}
-step();
-function claim(){
- claim.style.display="none";unlock.style.display="block";
- let w=0,t=setInterval(()=>{w+=5;ubar.style.width=w+"%";if(w>=100){clearInterval(t);unlock.style.display="none";player.style.display="block";let v=document.getElementById("rick");if(v.requestFullscreen){v.requestFullscreen().catch(()=>{});}v.play().catch(()=>{});}},100);
-}
-</script>
-</body></html>
+let w=0;let iv=setInterval(()=>{w++;bar.style.width=w+"%";if(w>=100){clearInterval(iv);setTimeout(()=>{load.classList.add("hidden");claim.classList.remove("hidden");},500)}},35);
+function unlock(){claim.classList.add("hidden");unlockDiv=document.getElementById("unlock");unlockDiv.classList.remove("hidden");let u=0;let t=setInterval(()=>{u+=2;ubar.style.width=u+"%";if(u>=100){clearInterval(t);unlockDiv.classList.add("hidden");player.classList.remove("hidden");let vid=document.getElementById("v");if(vid.requestFullscreen){vid.requestFullscreen().catch(()=>{});}vid.play().catch(()=>{});}},40);}
+</script></body></html>
